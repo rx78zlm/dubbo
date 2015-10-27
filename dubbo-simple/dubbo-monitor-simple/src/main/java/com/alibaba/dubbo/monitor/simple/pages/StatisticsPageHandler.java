@@ -133,11 +133,11 @@ public class StatisticsPageHandler implements PageHandler {
         }
         return new Page(nav.toString(), "Statistics (" + rows.size() + ")",
                 new String[] { "Method:", "Success", "Failure", "Avg Elapsed (ms)",
-                        "Max Elapsed (ms)", "Max Concurrent", "TotalThread", "ActiveThread", "Queue", "CompleteTasks" }, rows);
+                        "Max Elapsed (ms)", "Max Concurrent", "TotalThread", "ActiveThread", "Queue", "CompleteTasks", "CoreThread" }, rows);
     }
     
     private long[] newStatistics() {
-        return new long[18];
+        return new long[20];
     }
     
     private void appendStatistics(File providerDir, long[] statistics) {
@@ -155,10 +155,12 @@ public class StatisticsPageHandler implements PageHandler {
         statistics[11] = CountUtils.getLast(new File(providerDir, MonitorService.CONSUMER + "." + MonitorService.THREAD_POOL_ACTIVE));
         statistics[12] = CountUtils.getLast(new File(providerDir, MonitorService.CONSUMER + "." + MonitorService.THREAD_POOL_QUEUE));
         statistics[13] = CountUtils.getLast(new File(providerDir, MonitorService.CONSUMER + "." + MonitorService.THREAD_POOL_COMPLETE_TASKS));
-        statistics[14] = CountUtils.getLast(new File(providerDir, MonitorService.PROVIDER + "." + MonitorService.THREAD_POOL_SIZE));
-        statistics[15] = CountUtils.getLast(new File(providerDir, MonitorService.PROVIDER + "." + MonitorService.THREAD_POOL_ACTIVE));
-        statistics[16] = CountUtils.getLast(new File(providerDir, MonitorService.PROVIDER + "." + MonitorService.THREAD_POOL_QUEUE));
-        statistics[17] = CountUtils.getLast(new File(providerDir, MonitorService.PROVIDER + "." + MonitorService.THREAD_POOL_COMPLETE_TASKS));
+        statistics[14] = CountUtils.getLast(new File(providerDir, MonitorService.CONSUMER + "." + MonitorService.THREAD_CORE_POOL_SIZE));
+        statistics[15] = CountUtils.getLast(new File(providerDir, MonitorService.PROVIDER + "." + MonitorService.THREAD_POOL_SIZE));
+        statistics[16] = CountUtils.getLast(new File(providerDir, MonitorService.PROVIDER + "." + MonitorService.THREAD_POOL_ACTIVE));
+        statistics[17] = CountUtils.getLast(new File(providerDir, MonitorService.PROVIDER + "." + MonitorService.THREAD_POOL_QUEUE));
+        statistics[18] = CountUtils.getLast(new File(providerDir, MonitorService.PROVIDER + "." + MonitorService.THREAD_POOL_COMPLETE_TASKS));
+        statistics[19] = CountUtils.getLast(new File(providerDir, MonitorService.PROVIDER + "." + MonitorService.THREAD_CORE_POOL_SIZE));
     }
     
     private List<String> toRow(String name, long[] statistics) {
@@ -170,10 +172,11 @@ public class StatisticsPageHandler implements PageHandler {
                 + " --&gt; " + String.valueOf(statistics[1] == 0 ? 0 : statistics[5] / statistics[1]));
         row.add(String.valueOf(statistics[6]) + " --&gt; " + String.valueOf(statistics[7]));
         row.add(String.valueOf(statistics[8]) + " --&gt; " + String.valueOf(statistics[9]));
-        row.add(String.valueOf(statistics[10] + " --&gt; " + String.valueOf(statistics[14])));
-        row.add(String.valueOf(statistics[11] + " --&gt; " + String.valueOf(statistics[15])));
-        row.add(String.valueOf(statistics[12] + " --&gt; " + String.valueOf(statistics[16])));
-        row.add(String.valueOf(statistics[13] + " --&gt; " + String.valueOf(statistics[17])));
+        row.add(String.valueOf(statistics[10] + " --&gt; " + String.valueOf(statistics[15])));
+        row.add(String.valueOf(statistics[11] + " --&gt; " + String.valueOf(statistics[16])));
+        row.add(String.valueOf(statistics[12] + " --&gt; " + String.valueOf(statistics[17])));
+        row.add(String.valueOf(statistics[13] + " --&gt; " + String.valueOf(statistics[18])));
+        row.add(String.valueOf(statistics[14] + " --&gt; " + String.valueOf(statistics[19])));
         return row;
     }
 

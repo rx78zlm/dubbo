@@ -71,6 +71,8 @@ public interface MonitorService {
 
     String THREAD_POOL_COMPLETE_TASKS = "thread.complete.task";       // 成功处理的任务数
 
+    String THREAD_CORE_POOL_SIZE = "thread.core";   // 线程池最小线程数
+
     /**
      * 监控数据采集.
      * 1. 支持调用次数统计：count://host/interface?application=foo&method=foo&provider=10.20.153.11:20880&success=12&failure=2&elapsed=135423423

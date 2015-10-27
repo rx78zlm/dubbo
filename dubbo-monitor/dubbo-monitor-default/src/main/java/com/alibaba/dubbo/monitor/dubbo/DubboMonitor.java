@@ -218,11 +218,12 @@ public class DubboMonitor implements Monitor {
             WrappedChannelHandler dispatcher = (WrappedChannelHandler)RpcContext.getReadOnlyContext().get(side);
             try {
                 ThreadPoolExecutor threadPool = (ThreadPoolExecutor)dispatcher.getExecutor();
-                Map<String, String> map = new HashMap<String, String>(4);
+                Map<String, String> map = new HashMap<String, String>(5);
                 map.put(MonitorService.THREAD_POOL_ACTIVE, String.valueOf(threadPool.getActiveCount())); // 活动线程数
                 map.put(MonitorService.THREAD_POOL_SIZE, String.valueOf(threadPool.getPoolSize()));      // 总线程数
                 map.put(MonitorService.THREAD_POOL_QUEUE, String.valueOf(threadPool.getQueue().size())); // 任务队列中的任务数
                 map.put(MonitorService.THREAD_POOL_COMPLETE_TASKS, String.valueOf(threadPool.getCompletedTaskCount()));   // 已完成的任务数
+                map.put(MonitorService.THREAD_CORE_POOL_SIZE, String.valueOf(threadPool.getCorePoolSize()));    // 最低线程数
                 thread = StringUtils.toQueryString(map);
             } catch (Exception ignored) {
             }
